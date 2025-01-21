@@ -1,0 +1,63 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.5'
+	id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+//	Spring MVC
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+//	jakarta library - validation
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+//	Configuration - disadvantages of libraries
+	implementation 'javax.xml.bind:jaxb-api:2.3.1'
+//	implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
+
+//	Telegram bots library
+	implementation 'org.telegram:telegrambots-spring-boot-starter:6.9.7.0'
+
+//  Spring Data
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.flywaydb:flyway-core'
+	implementation 'mysql:mysql-connector-java:8.0.33'
+	implementation 'org.flywaydb:flyway-mysql'
+
+	implementation 'org.springframework.boot:spring-boot-starter-logging'
+
+	implementation 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+bootJar {
+	archiveFileName = "${archiveBaseName.get()}.jar"
+	destinationDirectory = file("$rootDir")
+}
